@@ -1,2 +1,3 @@
 # icon-export-for-figma
-plugin for figma to export icon into other data
+
+一个将 icon 转化成 base64 或者是 data url 数据格式的 figma 插件
