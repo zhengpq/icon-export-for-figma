@@ -3,5 +3,9 @@
   "id": "897751632843210903",
   "api": "1.0.0",
   "main": "dist/code.js",
-  "ui": "dist/ui.html"
+  "ui": "dist/ui.html",
+  "menu": [
+    {"name": "svg to dataurl", "command": "dataurl"},
+    {"name": "svg to base64", "command": "base64"}
+  ]
 }

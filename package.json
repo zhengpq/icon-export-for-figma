@@ -26,6 +26,8 @@
   "dependencies": {
     "@types/node": "^14.11.8",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "svg-to-dataurl": "^1.0.0",
+    "svg64": "^1.0.0"
   }
 }

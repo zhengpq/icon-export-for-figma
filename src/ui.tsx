@@ -5,29 +5,42 @@ import './ui.css'
 declare function require(path: string): any
 
 class App extends React.Component {
-  textbox: HTMLInputElement
 
-  countRef = (element: HTMLInputElement) => {
-    if (element) element.value = '5'
-    this.textbox = element
+  copyContent = (text: string) => {
+    if (typeof navigator.clipboard == 'undefined') {
+      const textarea: HTMLTextAreaElement = window.document.querySelector("#copy-area")
+      textarea.value = text
+      textarea.focus()
+      textarea.select()
+
+      const successful = window.document.execCommand('copy')
+      if (successful) {
+        parent.postMessage({ pluginMessage: { type: 'success' } }, '*')
+      } else {
+        parent.postMessage({ pluginMessage: { type: 'fail' } }, '*')
+      }
+      return
+    }
+    navigator.clipboard.writeText(text).then(
+      function() {
+        parent.postMessage({ pluginMessage: { type: 'success' } }, '*')
+      },
+      function(err) {
+        parent.postMessage({ pluginMessage: { type: 'fail' } }, '*')
+      }
+    )
   }
 
-  onCreate = () => {
-    const count = parseInt(this.textbox.value, 10)
-    parent.postMessage({ pluginMessage: { type: 'create-rectangles', count } }, '*')
-  }
-
-  onCancel = () => {
-    parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*')
+  componentDidMount() {
+    // console.log('paki', parent)
+    window.onmessage = (event: MessageEvent) => {
+      this.copyContent(event.data.pluginMessage.pluginMessage.text)
+    }
   }
 
   render() {
-    return <div>
-      {/* <img src={require('./logo.svg')} /> */}
-      <h2>Rectangle Creator</h2>
-      <p>Count: <input ref={this.countRef} /></p>
-      <button id="create" onClick={this.onCreate}>Create</button>
-      <button onClick={this.onCancel}>Cancel</button>
+    return <div className="">
+      <textarea id="copy-area"></textarea>
     </div>
   }
 }
