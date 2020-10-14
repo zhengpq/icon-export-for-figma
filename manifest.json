@@ -2,6 +2,6 @@
   "name": "icon-export",
   "id": "897751632843210903",
   "api": "1.0.0",
-  "main": "code.js",
-  "ui": "ui.html"
+  "main": "dist/code.js",
+  "ui": "dist/ui.html"
 }
